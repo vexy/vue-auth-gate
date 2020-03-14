@@ -2,6 +2,11 @@
   "name": "vue-jwt-auth",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "serve": "echo Serve script will be run",
+    "build": "",
+    "test": ""
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",

@@ -18,3 +18,11 @@ npm install @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons 
 Otherwise, you can just `npm install`.
 
 ### Build & run
+To get the things running, make sure `Vue CLI` has been installed.
+Use `-g` option to install it into global package scope.
+
+```
+npm install -g @vue/cli @vue/cli-service-global
+```
+
+#### Running locally
