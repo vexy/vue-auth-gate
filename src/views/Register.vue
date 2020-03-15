@@ -4,7 +4,7 @@
       <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card"/>
 
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(onSubmit)">
+        <form @submit.prevent="handleSubmit(handleRegistration)">
           <div class="form-group">
             <label>Email</label>
             <ValidationProvider name="E-mail" rules="required|email" v-slot="{ errors }">
@@ -55,7 +55,7 @@ extend('required', {
 });
 
 export default {
-  name: 'Register',
+  name: 'register',
   components: { ValidationObserver, ValidationProvider },
   data() {
     return {
@@ -77,10 +77,9 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
-      console.log("Checking for same passwords...")
+    handleRegistration () {
       if (this.user.password == this.confirmedPassword) {
-        console.log("Attempting registration")
+        console.log("Passwords match...")
         this.message = '';
         this.submitted = true;
         this.$store.dispatch('auth/register', this.user).then(
@@ -93,6 +92,9 @@ export default {
             this.successful = false;
           }
         );
+      } else {
+        this.message = 'Passwords must match.';
+        this.successfull = false;
       }
     }
   }

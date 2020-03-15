@@ -8,14 +8,14 @@
           <div class="form-group">
             <label>Email</label>
             <ValidationProvider name="E-mail" rules="required|email" v-slot="{ errors }">
-              <input v-model="email" type="email">
+              <input v-model="user.email" type="email">
               <div><span>{{ errors[0] }}</span></div>
             </ValidationProvider>
           </div>
           <div class="form-group">
             <label>Password</label>
             <ValidationProvider name="Password" rules="required" v-slot="{ errors }">
-              <input v-model="password" type="text">
+              <input v-model="user.password" type="text">
               <div><span>{{ errors[0] }}</span></div>
             </ValidationProvider>
           </div>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-
+import User from '../models/user';
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 import { required, email } from 'vee-validate/dist/rules';
 
@@ -48,15 +48,23 @@ export default {
     ValidationObserver,
   },
   data: () => ({
+    user: new User('', '', ''),
     loading: false,
-    email: '',
-    password: ''
+    message: '',
   }),
   methods: {
     onSubmit () {
-      console.log("onSubmit called...");
       this.loading = true;
-      alert('Data collected: email=' + this.email + ' , password=' + this.password);
+      console.log("dispatching store auth/login");
+      this.$store.dispatch('auth/login', this.user).then(
+        () => {
+            this.$router.push('/profile');
+        },
+        error => {
+            this.loading = false;
+            this.message = error.toString();
+        }
+      );
     }
   }
 };
