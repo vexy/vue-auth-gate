@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <nav class="navbar navbar-expand navbar-primary bg-light">
       <a href class="navbar-brand" @click.prevent>CoinGate</a>
       <div class="navbar-nav mr-auto">
         <li class="nav-item">
@@ -48,7 +48,7 @@
     </nav>
 
     <div class="container">
-      <router-view />
+      <router-view/>
     </div>
   </div>
 </template>
