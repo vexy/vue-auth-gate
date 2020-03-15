@@ -1,4 +1,4 @@
-** HEAVY WORK IN PROGRESS, STAY TUNNED **
+**HEAVY WORK IN PROGRESS, STAY TUNNED**
 
 # Vue.js + JWT authentication
 This repository contains code base template for having `JWT` based authentication app.
