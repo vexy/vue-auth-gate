@@ -1,3 +1,5 @@
+** HEAVY WORK IN PROGRESS, STAY TUNNED **
+
 # Vue.js + JWT authentication
 This repository contains code base template for having `JWT` based authentication app.
 The app declares both protected and public resources. It uses `Vue.js` framework under the hood.
@@ -14,18 +16,18 @@ npm install -g @vue/cli @vue/cli-service-global
 
 If you're starting from scratch, make sure the following dependencies are installed:
 ```
-npm install vue-router
-npm install vuex
-npm install vee-validate@2.2.15
-npm install axios
-npm install bootstrap jquery popper.js
+npm install vue-router@latest vuex@latest
+npm install vee-validate@latest
+npm install axios@latest
+npm install bootstrap@latest jquery@latest popper.js@latest
 npm install @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/vue-fontawesome
 ```
 
 Otherwise, you can just `npm install` after the repository cloning.
 
 ### Running locally
-To run the project locally, run `npm run serve`. By default, you can access web app in your browser by visiting `http://localhost:8000`.
+To run the project locally, run `npm run serve`.  
+*By default*, you can access web app in your browser by visiting `http://localhost:8000` or `:8080`
 
 ### Production build
 To create build ready variance, run `npm run build`. Optimised output will be stored in `dist/` folder.

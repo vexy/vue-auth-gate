@@ -1,6 +1,6 @@
 {
-  "name": "jwt-test",
-  "version": "0.0.1",
+  "name": "vue-authentication-gate",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
