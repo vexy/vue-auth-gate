@@ -47,14 +47,12 @@ const routes = [
     }
 ];
 
-console.log("Setting routes...")
 const router = new VueRouter({
   mode: 'history',
   routes,
 });
 
 // protect the access
-console.log("Protecting the routes")
 router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/register', '/home'];
   const authRequired = !publicPages.includes(to.path);
