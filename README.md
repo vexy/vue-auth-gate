@@ -1,10 +1,17 @@
-# Vue.js authentication example
-This repo contains example of how you can use `Vue.js` source template to have protected routing.
-Routing protection is based on the `JWT` tokens and simple http server is built in to act as backend service.
+# Vue.js + JWT authentication
+This repository contains code base template for having `JWT` based authentication app.
+The app declares both protected and public resources. It uses `Vue.js` framework under the hood.
 
-Enjoy it !
+❤️ Enjoy it !
 
 ### Setup
+To get the things running, make sure `Vue CLI` has been installed.  
+Use `-g` option to install it into global package scope.
+
+```
+npm install -g @vue/cli @vue/cli-service-global
+```
+
 If you're starting from scratch, make sure the following dependencies are installed:
 ```
 npm install vue-router
@@ -15,14 +22,18 @@ npm install bootstrap jquery popper.js
 npm install @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/vue-fontawesome
 ```
 
-Otherwise, you can just `npm install`.
+Otherwise, you can just `npm install` after the repository cloning.
 
-### Build & run
-To get the things running, make sure `Vue CLI` has been installed.
-Use `-g` option to install it into global package scope.
+### Running locally
+To run the project locally, run `npm run serve`. By default, you can access web app in your browser by visiting `http://localhost:8000`.
 
-```
-npm install -g @vue/cli @vue/cli-service-global
-```
+### Production build
+To create build ready variance, run `npm run build`. Optimised output will be stored in `dist/` folder.
 
-#### Running locally
+
+### Inspiration
+This example has been inspired by: https://github.com/websanova/vue-auth
+
+----
+
+Copyright © **2020** Veljko Tekelerović

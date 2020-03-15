@@ -1,78 +1,66 @@
 <template>
   <div class="col-md-12">
     <div class="card card-container">
-      <img
-        id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
-      />
-      <form name="form" @submit.prevent="handleRegister">
-        <div v-if="!successful">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input
-              v-model="user.username"
-              v-validate="'required|min:3|max:20'"
-              type="text"
-              class="form-control"
-              name="username"
-            />
-            <div
-              v-if="submitted && errors.has('username')"
-              class="alert-danger"
-            >{{errors.first('username')}}</div>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input
-              v-model="user.email"
-              v-validate="'required|email|max:50'"
-              type="email"
-              class="form-control"
-              name="email"
-            />
-            <div
-              v-if="submitted && errors.has('email')"
-              class="alert-danger"
-            >{{errors.first('email')}}</div>
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input
-              v-model="user.password"
-              v-validate="'required|min:6|max:40'"
-              type="password"
-              class="form-control"
-              name="password"
-            />
-            <div
-              v-if="submitted && errors.has('password')"
-              class="alert-danger"
-            >{{errors.first('password')}}</div>
-          </div>
-          <div class="form-group">
-            <button class="btn btn-primary btn-block">Sign Up</button>
-          </div>
-        </div>
-      </form>
+      <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card"/>
 
-      <div
-        v-if="message"
-        class="alert"
-        :class="successful ? 'alert-success' : 'alert-danger'"
-      >{{message}}</div>
+      <ValidationObserver v-slot="{ handleSubmit }">
+        <form @submit.prevent="handleSubmit(handleRegistration)">
+          <div class="form-group">
+            <label>Email</label>
+            <ValidationProvider name="E-mail" rules="required|email" v-slot="{ errors }">
+              <input v-model="user.email" type="email">
+              <div><span>{{ errors[0] }}</span></div>
+            </ValidationProvider>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <ValidationProvider name="Password" rules="required" v-slot="{ errors }">
+              <input v-model="user.password" type="text">
+              <div><span>{{ errors[0] }}</span></div>
+            </ValidationProvider>
+          </div>
+
+          <div class="form-group">
+            <label>Confirm Password</label>
+            <ValidationProvider name="Password" rules="required" v-slot="{ errors }">
+              <input v-model="confirmedPassword" type="text">
+              <div><span>{{ errors[0] }}</span></div>
+            </ValidationProvider>
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-primary btn-block" type="submit">Register</button>
+          </div>
+        </form>
+      </ValidationObserver>
+
+      <div v-if="message" class="alert"
+        :class="successful ? 'alert-success' : 'alert-danger'">
+        {{message}}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import User from '../models/user';
+import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
+import { required, email } from 'vee-validate/dist/rules';
+
+// No message specified.
+extend('email', email);
+extend('required', {
+  ...required,
+  message: 'This field is required'
+});
 
 export default {
-  name: 'Register',
+  name: 'register',
+  components: { ValidationObserver, ValidationProvider },
   data() {
     return {
       user: new User('', '', ''),
+      confirmedPassword: '',
       submitted: false,
       successful: false,
       message: ''
@@ -89,26 +77,25 @@ export default {
     }
   },
   methods: {
-    handleRegister() {
-      this.message = '';
-      this.submitted = true;
-      this.$validator.validate().then(isValid => {
-        if (isValid) {
-          this.$store.dispatch('auth/register', this.user).then(
-            data => {
-              this.message = data.message;
-              this.successful = true;
-            },
-            error => {
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-              this.successful = false;
-            }
-          );
-        }
-      });
+    handleRegistration () {
+      if (this.user.password == this.confirmedPassword) {
+        console.log("Passwords match...")
+        this.message = '';
+        this.submitted = true;
+        this.$store.dispatch('auth/register', this.user).then(
+          data => {
+            this.message = data.message;
+            this.successful = true;
+          },
+          error => {
+            this.message = error.toString();
+            this.successful = false;
+          }
+        );
+      } else {
+        this.message = 'Passwords must match.';
+        this.successfull = false;
+      }
     }
   }
 };

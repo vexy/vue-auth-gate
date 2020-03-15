@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import App from './App.vue';
-import router from './router';
+import { router } from './router';
 import store from './store';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import * as VeeValidate from 'vee-validate';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
@@ -18,13 +19,11 @@ library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
 Vue.config.productionTip = false;
 
+Vue.use(VeeValidate);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-console.log("Vue init in progress...");
 new Vue({
   router,
   store,
-  render: (h) => h(App),
+  render: h => h(App)
 }).$mount('#app');
-
-console.log("Vue init done...");

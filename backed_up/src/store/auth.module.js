@@ -10,7 +10,6 @@ export const auth = {
   state: initialState,
   actions: {
     login({ commit }, user) {
-      console.log("<AuthMODULE> About to Login, user.email: " + user.email);
       return AuthService.login(user).then(
         user => {
           commit('loginSuccess', user);
@@ -27,8 +26,6 @@ export const auth = {
       commit('logout');
     },
     register({ commit }, user) {
-      console.log("Performing user registration");
-      console.log("User data: " + user.username + ", password = " + user.password)
       return AuthService.register(user).then(
         response => {
           commit('registerSuccess');
@@ -47,7 +44,6 @@ export const auth = {
       state.user = user;
     },
     loginFailure(state) {
-      console.log("<AuthMODULE> login failure");
       state.status.loggedIn = false;
       state.user = null;
     },

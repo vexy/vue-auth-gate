@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand navbar-primary bg-light">
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
       <a href class="navbar-brand" @click.prevent>CoinGate</a>
       <div class="navbar-nav mr-auto">
         <li class="nav-item">
@@ -48,7 +48,7 @@
     </nav>
 
     <div class="container">
-      <router-view/>
+      <router-view />
     </div>
   </div>
 </template>
@@ -82,27 +82,3 @@ export default {
   }
 };
 </script>
-
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>

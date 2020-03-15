@@ -7,10 +7,14 @@
 </template>
 
 <script>
-import UserService from '../services/user.service';
-
+import UserService from '../services/user-service';
+// @ is an alias to /src
+import HelloWorld from '@/components/HelloWorld.vue';
 export default {
-  name: 'Home',
+  name: 'home',
+  components: {
+    HelloWorld,
+  },
   data() {
     return {
       content: ''
@@ -22,10 +26,7 @@ export default {
         this.content = response.data;
       },
       error => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
+        this.content = error.toString();
       }
     );
   }
