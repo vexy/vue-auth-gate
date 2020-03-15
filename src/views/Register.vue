@@ -4,7 +4,7 @@
       <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card"/>
 
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="tryRegistration">
+        <form @submit.prevent="handleSubmit(onSubmit)">
           <div class="form-group">
             <label>Email</label>
             <ValidationProvider name="E-mail" rules="required|email" v-slot="{ errors }">
@@ -77,7 +77,7 @@ export default {
     }
   },
   methods: {
-    tryRegistration () {
+    onSubmit () {
       console.log("Checking for same passwords...")
       if (this.user.password == this.confirmedPassword) {
         console.log("Attempting registration")
