@@ -8,34 +8,18 @@
       />
       <form name="form" @submit.prevent="handleLogin">
         <div class="form-group">
-          <label for="username">Username</label>
-          <input
-            v-model="user.username"
-            v-validate="'required'"
-            type="text"
-            class="form-control"
-            name="username"
-          />
-          <div
-            v-if="errors.has('username')"
-            class="alert alert-danger"
-            role="alert"
-          >Username is required!</div>
+          <label for="username">Email</label>
+          <ValidationProvider v-slot="v">
+            <input v-model="user.email" type="text">
+            <span>{{ v.errors[0] }}</span>
+          </ValidationProvider>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input
-            v-model="user.password"
-            v-validate="'required'"
-            type="password"
-            class="form-control"
-            name="password"
-          />
-          <div
-            v-if="errors.has('password')"
-            class="alert alert-danger"
-            role="alert"
-          >Password is required!</div>
+          <validation-provider rules="required" v-slot="{ errors }">
+            <input v-model="user.password" name="myinput" type="text" />
+            <span>{{ errors[1] }}</span>
+          </validation-provider>
         </div>
         <div class="form-group">
           <button class="btn btn-primary btn-block" :disabled="loading">
@@ -43,24 +27,29 @@
             <span>Login</span>
           </button>
         </div>
-        <div class="form-group">
-          <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
-        </div>
       </form>
     </div>
   </div>
 </template>
 
 <script>
+import { ValidationProvider } from 'vee-validate';
+
 import User from '../models/user';
 
 export default {
-  name: 'Login',
+  name: 'login',
+  components: {
+    ValidationProvider
+  },
   data() {
     return {
-      user: new User('', ''),
+      user: new User(),
       loading: false,
-      message: ''
+      errors: [
+        'Username is required',
+        'Password is required',
+      ]
     };
   },
   computed: {
