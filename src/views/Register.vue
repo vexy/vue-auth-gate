@@ -1,10 +1,18 @@
 <template>
   <div class="col-md-12">
     <div class="card card-container">
+      <h5>Signup. It's easy</h5><br>
       <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card"/>
 
       <ValidationObserver v-slot="{ handleSubmit }">
         <form @submit.prevent="handleSubmit(handleRegistration)">
+          <div class="form-group">
+            <label>Username</label>
+            <ValidationProvider name="Username" rules="required" v-slot="{ errors }">
+              <input v-model="user.username" type="text">
+              <div><span>{{ errors[0] }}</span></div>
+            </ValidationProvider>
+          </div>
           <div class="form-group">
             <label>Email</label>
             <ValidationProvider name="E-mail" rules="required|email" v-slot="{ errors }">
@@ -28,16 +36,23 @@
             </ValidationProvider>
           </div>
 
+          <div>
+            <p v-if="message" class="alert"
+              :class="successful ? 'alert-success' : 'alert-warning'">
+              {{message}}
+              <div v-if="successful">
+                <router-link to="/profile" class="nav-link">
+                  <font-awesome-icon icon="login" /> Login now ?
+                </router-link>
+              </div>
+            </p>
+          </div>
+
           <div class="form-group">
             <button class="btn btn-primary btn-block" type="submit">Register</button>
           </div>
         </form>
       </ValidationObserver>
-
-      <div v-if="message" class="alert"
-        :class="successful ? 'alert-success' : 'alert-danger'">
-        {{message}}
-      </div>
     </div>
   </div>
 </template>
@@ -78,13 +93,13 @@ export default {
   },
   methods: {
     handleRegistration () {
-      if (this.user.password == this.confirmedPassword) {
-        console.log("Passwords match...")
+      // if (this.user.password == this.confirmedPassword) {
         this.message = '';
         this.submitted = true;
+        console.log("<Register> Registration, dispatching auth/register...")
         this.$store.dispatch('auth/register', this.user).then(
           data => {
-            this.message = data.message;
+            this.message = "You have been registered successfully !";
             this.successful = true;
           },
           error => {
@@ -92,10 +107,12 @@ export default {
             this.successful = false;
           }
         );
+        /*
       } else {
         this.message = 'Passwords must match.';
         this.successfull = false;
       }
+        */
     }
   }
 };

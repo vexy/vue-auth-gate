@@ -1,22 +1,24 @@
 import AuthService from '../services/auth-service';
 
-const user = JSON.parse(localStorage.getItem('user'));
-const initialState = user
-  ? { status: { loggedIn: true }, user }
-  : { status: { loggedIn: false }, user: null };
+const token = localStorage.getItem('user');
+const initialState = token
+  ? { status: { loggedIn: true }, token, user: null }
+  : { status: { loggedIn: false }, token: null, user: null };
 
 export const auth = {
   namespaced: true,
   state: initialState,
   actions: {
     login({ commit }, user) {
-      console.log("<AuthMODULE> About to Login, user.email: " + user.email);
+      console.log("<AuthMODULE> About to Login, user: " + user.username);
       return AuthService.login(user).then(
-        user => {
-          commit('loginSuccess', user);
-          return Promise.resolve(user);
+        token => {
+          console.log("<AuthMODULE> Response we have " + token);
+          commit('loginSuccess', token, user);
+          return Promise.resolve(token);
         },
         error => {
+          console.log("<AuthMODULE> Error");
           commit('loginFailure');
           return Promise.reject(error);
         }
@@ -27,14 +29,14 @@ export const auth = {
       commit('logout');
     },
     register({ commit }, user) {
-      console.log("Performing user registration");
-      console.log("User data: " + user.username + ", password = " + user.password)
       return AuthService.register(user).then(
         response => {
+          console.log("<AuthModule> Register SUCCESS with: " + response.data);
           commit('registerSuccess');
           return Promise.resolve(response.data);
         },
         error => {
+          console.log("<AuthModule> Register ERROR with: " + error);
           commit('registerFailure');
           return Promise.reject(error);
         }
@@ -42,18 +44,20 @@ export const auth = {
     }
   },
   mutations: {
-    loginSuccess(state, user) {
+    loginSuccess(state, newToken, newUser) {
+      console.log("<AuthModule:commit> Token " + newToken + ".. User: " + newUser)
       state.status.loggedIn = true;
-      state.user = user;
+      state.token = newToken;
+      state.user = newUser
+      localStorage.user = newToken
     },
     loginFailure(state) {
-      console.log("<AuthMODULE> login failure");
       state.status.loggedIn = false;
-      state.user = null;
+      state.token = null;
     },
     logout(state) {
       state.status.loggedIn = false;
-      state.user = null;
+      state.token = null;
     },
     registerSuccess(state) {
       state.status.loggedIn = false;

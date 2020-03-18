@@ -1,28 +1,23 @@
 import axios from 'axios';
+import authHeader from './auth-header';
 
-const API_URL = 'http://localhost:8080/api/auth/';
+//127.0.0.1:5000
+const API_URL = 'http://localhost:5000/';
 
 class AuthService {
   login(user) {
-    console.log("Checking fixed input <AUTH SERVICE>");
-    if( user.email == "t@t.co" && user.password == "test") {
-      console.log("Test account passed...")
-      return { data: 'someTOKEN-HARDCODED-instead-of-response' };
-    } else {
-      return axios
-        .post(API_URL + 'signin', {
+    let fullPath = API_URL + 'login'
+    console.log("<AuthServeice:login>Logging in with this user: " + user.username)
+    return axios.post(fullPath, {}, {
+        auth: {
           username: user.username,
           password: user.password
-        })
-        .then(response => {
-          console.log("<AuthService> response returned: " + response)
-          if (response.data.accessToken) {
-            localStorage.setItem('user', JSON.stringify(response.data));
-          }
-
-          return response.data;
-        });
-    }
+      }}).then( response => {
+        let newToken = response.data['token']
+        console.log("<AuthServeice:login>Token: " + response.data['token'])
+        console.log("<AuthServeice:login>Login headers: " + response.status)
+        return newToken;
+      });
   }
 
   logout() {
@@ -31,11 +26,11 @@ class AuthService {
   }
 
   register(user) {
-    console.log("About to register user <AUTH SERVICE>")
-    return axios.post(API_URL + 'signup', {
+    console.log("<AuthService> Registering new user:" + user.username)
+    return axios.post(API_URL + 'register', {
       username: user.username,
+      password: user.password,
       email: user.email,
-      password: user.password
     });
   }
 }

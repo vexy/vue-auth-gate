@@ -1,8 +1,19 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-      <h3>{{content}}</h3>
+      <h3>Runing server data dump</h3>
     </header>
+    <div>
+      <h4>Total registered users: {{content['count']}}</h4>
+      <div>
+        <span>Raw content</span>
+      </div>
+      <ul>
+        <li v-for="user in users">
+            <p>USER: <span>{{user}}</span></p>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -17,13 +28,15 @@ export default {
   },
   data() {
     return {
-      content: ''
+      content: '',
+      users: []
     };
   },
   mounted() {
     UserService.getPublicContent().then(
       response => {
         this.content = response.data;
+        this.users = this.content['storage']
       },
       error => {
         this.content = error.toString();

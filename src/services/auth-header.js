@@ -1,8 +1,17 @@
-export default function authHeader() {
-  let user = JSON.parse(localStorage.getItem('user'));
+export default function authHeader(user) {
+  let token = JSON.parse(localStorage.getItem('user'));
 
+  // construct
   if (user && user.accessToken) {
-    return { Authorization: 'Bearer ' + user.accessToken };
+    // Authorization based on HTTP header
+    const options = {
+      headers: {'X-Custom-Header': 'value'}
+    };
+    let basicAuth = 'Basic ' + btoa(user.username + ':' + user.password);
+    console.log("<HEADER> This is header: " + basicAuth)
+    return {
+      headers: {'Authorization': basicAuth }
+    };
   } else {
     return {};
   }

@@ -2,40 +2,32 @@
   <div class="container">
     <header class="jumbotron">
       <h3>
-        <strong>{{currentUser.username}}</strong> Profile
+        Welcome to the system
       </h3>
+      <div>
+        <span>Your token is</span>
+        <p> _token_ </p>
+      </div>
     </header>
-    <p>
-      <strong>Token:</strong>
-      {{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-    </p>
-    <p>
-      <strong>Id:</strong>
-      {{currentUser.id}}
-    </p>
-    <p>
-      <strong>Email:</strong>
-      {{currentUser.email}}
-    </p>
-    <strong>Authorities:</strong>
-    <ul>
-      <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
-    </ul>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Profile',
+  name: 'profile',
   computed: {
     currentUser() {
-      return this.$store.state.auth.user;
+      return this.$store.state.user;
+    },
+    token() {
+      return this.$store.state.token;
     }
   },
   mounted() {
-    if (!this.currentUser) {
-      this.$router.push('/login');
-    }
+    console.log("State: " + this.$store.state)
+    //if (!this.currentUser) {
+      //this.$router.push('/login');
+    //}
   }
 };
 </script>

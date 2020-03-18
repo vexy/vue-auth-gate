@@ -20,11 +20,8 @@ Vue.config.productionTip = false;
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-console.log("Vue init in progress...");
 new Vue({
   router,
   store,
   render: (h) => h(App),
 }).$mount('#app');
-
-console.log("Vue init done...");

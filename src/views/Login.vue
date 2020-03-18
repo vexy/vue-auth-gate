@@ -1,14 +1,15 @@
 <template>
   <div class="col-md-12">
     <div class="card card-container">
+      <h5>Welcome to System</h5><br>
       <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card"/>
 
       <ValidationObserver v-slot="{ handleSubmit }">
         <form @submit.prevent="handleSubmit(onSubmit)">
           <div class="form-group">
-            <label>Email</label>
-            <ValidationProvider name="E-mail" rules="required|email" v-slot="{ errors }">
-              <input v-model="user.email" type="email">
+            <label>Username</label>
+            <ValidationProvider name="username" rules="required" v-slot="{ errors }">
+              <input v-model="user.username" type="text">
               <div><span>{{ errors[0] }}</span></div>
             </ValidationProvider>
           </div>
@@ -20,8 +21,12 @@
             </ValidationProvider>
           </div>
 
+          <div v-if="errored">
+            <p class="alert alert-warning">Wrong login creadentials. Try Again</p>
+          </div>
+
           <div class="form-group">
-            <button class="btn btn-primary btn-block" type="submit">Sign Up</button>
+            <button class="btn btn-primary btn-block" type="submit">Login</button>
           </div>
         </form>
       </ValidationObserver>
@@ -34,7 +39,7 @@ import User from '../models/user';
 import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
 import { required, email } from 'vee-validate/dist/rules';
 
-// No message specified.
+// No message specified.    //leftover from email based login
 extend('email', email);
 extend('required', {
   ...required,
@@ -49,19 +54,20 @@ export default {
   },
   data: () => ({
     user: new User('', '', ''),
-    loading: false,
     message: '',
+    errored: false,
   }),
   methods: {
     onSubmit () {
-      this.loading = true;
-      console.log("dispatching store auth/login");
+      this.errored = false;
       this.$store.dispatch('auth/login', this.user).then(
         () => {
+            this.errored = false;
+            console.log("<LOGIN> pushing to profile")
             this.$router.push('/profile');
         },
         error => {
-            this.loading = false;
+            this.errored = true;
             this.message = error.toString();
         }
       );
