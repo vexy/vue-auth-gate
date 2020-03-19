@@ -1,21 +1,20 @@
 import AuthService from '../services/auth-service';
 
-const token = localStorage.getItem('user');
+const token = localStorage.getItem('accessToken');
+const usr = localStorage.getItem('username');
 const initialState = token
-  ? { status: { loggedIn: true }, token, user: null }
-  : { status: { loggedIn: false }, token: null, user: null };
+  ? { loggedIn: true, token, username: usr }
+  : { loggedIn: false, token: null, username: '' };
 
 export const auth = {
   namespaced: true,
   state: initialState,
   actions: {
     login({ commit }, user) {
-      console.log("<AuthMODULE> About to Login, user: " + user.username);
       return AuthService.login(user).then(
-        token => {
-          console.log("<AuthMODULE> Response we have " + token);
-          commit('loginSuccess', token, user);
-          return Promise.resolve(token);
+        dataSet => {
+          commit('loginSuccess', dataSet);
+          return Promise.resolve(dataSet);
         },
         error => {
           console.log("<AuthMODULE> Error");
@@ -31,12 +30,10 @@ export const auth = {
     register({ commit }, user) {
       return AuthService.register(user).then(
         response => {
-          console.log("<AuthModule> Register SUCCESS with: " + response.data);
           commit('registerSuccess');
           return Promise.resolve(response.data);
         },
         error => {
-          console.log("<AuthModule> Register ERROR with: " + error);
           commit('registerFailure');
           return Promise.reject(error);
         }
@@ -44,26 +41,32 @@ export const auth = {
     }
   },
   mutations: {
-    loginSuccess(state, newToken, newUser) {
-      console.log("<AuthModule:commit> Token " + newToken + ".. User: " + newUser)
-      state.status.loggedIn = true;
-      state.token = newToken;
-      state.user = newUser
-      localStorage.user = newToken
+    loginSuccess(state, objects) {
+      state.loggedIn = true;
+      state.token = objects.token;
+      state.username = objects.user.username;
+      localStorage.accessToken = objects.token;
+      console.log("<state_commit> loginSuccess: completed !");
     },
     loginFailure(state) {
-      state.status.loggedIn = false;
+      state.loggedIn = false;
       state.token = null;
     },
     logout(state) {
-      state.status.loggedIn = false;
+      state.loggedIn = false;
       state.token = null;
+      state.username = null;
+      console.log("<state_commit> logout: completed !");
     },
     registerSuccess(state) {
-      state.status.loggedIn = false;
+      state.loggedIn = false;
+      state.token = null;
+      state.username = null;
     },
     registerFailure(state) {
-      state.status.loggedIn = false;
+      state.loggedIn = false;
+      state.token = null;
+      state.username = null;
     }
   }
 };

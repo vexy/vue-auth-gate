@@ -61,9 +61,8 @@ export default {
     onSubmit () {
       this.errored = false;
       this.$store.dispatch('auth/login', this.user).then(
-        () => {
+        (response) => {
             this.errored = false;
-            console.log("<LOGIN> pushing to profile")
             this.$router.push('/profile');
         },
         error => {

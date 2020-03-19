@@ -7,16 +7,15 @@ const API_URL = 'http://localhost:5000/';
 class AuthService {
   login(user) {
     let fullPath = API_URL + 'login'
-    console.log("<AuthServeice:login>Logging in with this user: " + user.username)
+    console.log("<AuthServeice:login>Logging in...")
     return axios.post(fullPath, {}, {
         auth: {
           username: user.username,
           password: user.password
       }}).then( response => {
         let newToken = response.data['token']
-        console.log("<AuthServeice:login>Token: " + response.data['token'])
-        console.log("<AuthServeice:login>Login headers: " + response.status)
-        return newToken;
+        let returnData = { 'token': newToken, 'user': user}
+        return returnData;
       });
   }
 

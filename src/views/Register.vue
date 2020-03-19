@@ -42,7 +42,7 @@
               {{message}}
               <div v-if="successful">
                 <router-link to="/profile" class="nav-link">
-                  <font-awesome-icon icon="login" /> Login now ?
+                  <font-awesome-icon icon="user" /> Login now ?
                 </router-link>
               </div>
             </p>
@@ -83,7 +83,7 @@ export default {
   },
   computed: {
     loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
+      return this.$store.state.auth.loggedIn;
     }
   },
   mounted() {

@@ -1,14 +1,13 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-      <h3>
-        Welcome to the system
-      </h3>
-      <div>
-        <span>Your token is</span>
-        <p> _token_ </p>
-      </div>
+      <h3>Profile data</h3>
+      <h4><strong>{{username}}</strong></h4>
     </header>
+    <div>
+      <span><strong>Access token</strong></span>
+      <div> {{token}} </div>
+    </div>
   </div>
 </template>
 
@@ -16,18 +15,22 @@
 export default {
   name: 'profile',
   computed: {
-    currentUser() {
-      return this.$store.state.user;
+    username() {
+      return this.$store.state.auth.username;
     },
     token() {
-      return this.$store.state.token;
+      return this.$store.state.auth.token;
+    },
+    authenticated() {
+      console.log("LoggedIN:")
+      console.log(this.$store.state.auth.loggedIn);
+      return this.$store.state.auth.loggedIn;
     }
   },
   mounted() {
-    console.log("State: " + this.$store.state)
-    //if (!this.currentUser) {
-      //this.$router.push('/login');
-    //}
+    if (!this.authenticated) {
+      this.$router.push('/login');
+    }
   }
 };
 </script>
