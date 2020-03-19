@@ -20,12 +20,10 @@ class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('user');
-    // redirect to some page ?
+    //do any API logout if needed
   }
 
   register(user) {
-    console.log("<AuthService> Registering new user:" + user.username)
     return axios.post(API_URL + 'register', {
       username: user.username,
       password: user.password,

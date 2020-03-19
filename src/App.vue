@@ -1,19 +1,11 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand navbar-primary bg-light">
-      <a href class="navbar-brand" @click.prevent>#YOUR LOGO#</a>
-      <div class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link to="/home" class="nav-link">
-            <font-awesome-icon icon="home" />Home
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link>
-        </li>
-      </div>
+      <router-link to="/home" class="nav-link">
+        <font-awesome-icon :icon="['fa', 'server']" class="icon alt"/> Server
+      </router-link>
 
-      <div v-if="!currentUser" class="navbar-nav ml-auto">
+      <div v-if="!loggedIn" class="navbar-nav ml-auto">
         <li class="nav-item">
           <router-link to="/register" class="nav-link">
             <font-awesome-icon icon="user-plus" />Sign Up
@@ -26,11 +18,11 @@
         </li>
       </div>
 
-      <div v-if="currentUser" class="navbar-nav ml-auto">
+      <div v-if="loggedIn" class="navbar-nav ml-auto">
         <li class="nav-item">
           <router-link to="/profile" class="nav-link">
             <font-awesome-icon icon="user" />
-            {{ currentUser.username }}
+            {{ username }}
           </router-link>
         </li>
         <li class="nav-item">
@@ -50,19 +42,15 @@
 <script>
 export default {
   computed: {
-    currentUser() {
-      return this.$store.state.auth.user;
+    loggedIn() {
+      return this.$store.state.auth.loggedIn ? true: false;
+    },
+    username() {
+      return this.$store.state.auth.username;
     },
     showAdminBoard() {
       if (this.currentUser && this.currentUser.roles) {
         return this.currentUser.roles.includes('ROLE_ADMIN');
-      }
-
-      return false;
-    },
-    showModeratorBoard() {
-      if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('ROLE_MODERATOR');
       }
 
       return false;
@@ -83,7 +71,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  text-align: left;
   color: #2c3e50;
 }
 

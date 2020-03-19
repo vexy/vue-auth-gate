@@ -46,6 +46,7 @@ export const auth = {
       state.token = objects.token;
       state.username = objects.user.username;
       localStorage.accessToken = objects.token;
+      localStorage.username = objects.user.username;
       console.log("<state_commit> loginSuccess: completed !");
     },
     loginFailure(state) {
@@ -56,12 +57,15 @@ export const auth = {
       state.loggedIn = false;
       state.token = null;
       state.username = null;
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('username');
       console.log("<state_commit> logout: completed !");
     },
     registerSuccess(state) {
       state.loggedIn = false;
       state.token = null;
       state.username = null;
+      console.log("<state_commit> registerSuccess: completed !");
     },
     registerFailure(state) {
       state.loggedIn = false;

@@ -1,24 +1,26 @@
 <template>
   <div class="container">
-    <header class="jumbotron">
-      <h3>Runing server data dump</h3>
+    <header class="jumbotron jumbotron-fluid padding: 4rem 1rem;">
+      <h3>Current server data</h3>
+      <p class="lead">Number of registered users: {{content.count}}</p>
     </header>
-    <div>
-      <h4>Total registered users: {{content['count']}}</h4>
+
+    <div class="card">
       <div>
-        <span>Raw content</span>
+        <p class="lead">USERS</p>
       </div>
-      <ul>
+      <ol>
         <li v-for="user in users">
             <p>USER: <span>{{user}}</span></p>
         </li>
-      </ul>
+      </ol>
     </div>
   </div>
 </template>
 
 <script>
 import UserService from '../services/user-service';
+
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue';
 export default {
@@ -45,3 +47,24 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+
+.card-container.card {
+  max-width: 350px !important;
+  padding: 40px 40px;
+}
+
+.card {
+  background-color: #f7f7f7;
+  padding: 20px 25px 30px;
+  margin: 0 auto 25px;
+  margin-top: 50px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+</style>
