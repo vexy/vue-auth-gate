@@ -76,14 +76,16 @@ export default {
 </script>
 
 <style scoped>
-label {
+
+.label {
   display: block;
-  margin-top: 10px;
+  margin-right: 1rem;
 }
 
 .card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
+  text-align: center;
 }
 
 .card {

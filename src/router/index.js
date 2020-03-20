@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
+
+// public pages (statically loaded)
+import Server from '../views/Server.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 
@@ -8,9 +10,9 @@ Vue.use(VueRouter);
 
 const routes = [
     {
-      path: '/home',
-      name: 'home',
-      component: Home
+      path: '/server',
+      name: 'server',
+      component: Server
     },
     {
       path: '/login',
@@ -22,30 +24,23 @@ const routes = [
       name: 'register',
       component: Register
     },
+
+    //protected routes dynamically loaded
     {
       path: '/profile',
       name: 'profile',
-      // lazy-loaded
       component: () => import('../views/Profile.vue')
     },
     {
-      path: '/admin',
-      name: 'admin',
-      // lazy-loaded
-      component: () => import('../views/BoardAdmin.vue')
+      path: '/protected1',
+      name: 'protected1',
+      component: () => import('../views/Protected1.vue')
     },
     {
-      path: '/mod',
-      name: 'moderator',
-      // lazy-loaded
-      component: () => import('../views/BoardModerator.vue')
+      path: '/protected2',
+      name: 'protected2',
+      component: () => import('../views/Protected2.vue')
     },
-    {
-      path: '/user',
-      name: 'user',
-      // lazy-loaded
-      component: () => import('../views/BoardUser.vue')
-    }
 ];
 
 const router = new VueRouter({
@@ -55,7 +50,7 @@ const router = new VueRouter({
 
 // protect the access
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home'];
+  const publicPages = ['/login', '/register', '/server'];
   const authRequired = !publicPages.includes(to.path);
   const token = localStorage.getItem('accessToken');
 

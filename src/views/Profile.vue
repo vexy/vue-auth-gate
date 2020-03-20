@@ -22,8 +22,6 @@ export default {
       return this.$store.state.auth.token;
     },
     authenticated() {
-      console.log("Profile: LoggedIN:")
-      console.log(this.$store.state.auth.loggedIn);
       return this.$store.state.auth.loggedIn
     }
   },

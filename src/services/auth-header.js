@@ -1,18 +1,19 @@
-export default function authHeader(user) {
-  let token = JSON.parse(localStorage.getItem('user'));
 
-  // construct
-  if (user && user.accessToken) {
-    // Authorization based on HTTP header
-    const options = {
-      headers: {'X-Custom-Header': 'value'}
-    };
+const token = localStorage.getItem('accessToken');
+
+class AuthHeader {
+  setupLoginHeader() {
     let basicAuth = 'Basic ' + btoa(user.username + ':' + user.password);
-    console.log("<HEADER> This is header: " + basicAuth)
+    console.log("<HEADER> This is header:"); console.log(basicAuth);
     return {
       headers: {'Authorization': basicAuth }
     };
-  } else {
-    return {};
   }
+
+  setupProtectedAccessHeader(url) {
+    return url + "?token=" + token;
+  }
+
 }
+
+export default new AuthHeader();

@@ -19,14 +19,12 @@
 </template>
 
 <script>
-import UserService from '../services/user-service';
 
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import ServerService from '../services/server-service';
+
 export default {
-  name: 'home',
+  name: 'server',
   components: {
-    HelloWorld,
   },
   data() {
     return {
@@ -35,10 +33,10 @@ export default {
     };
   },
   mounted() {
-    UserService.getPublicContent().then(
+    ServerService.getServerDump().then(
       response => {
         this.content = response.data;
-        this.users = this.content['storage']
+        this.users = this.content.storage;
       },
       error => {
         this.content = error.toString();

@@ -9,12 +9,13 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   faServer,
   faUser,
+  faKey,
   faUserPlus,
   faSignInAlt,
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faServer, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
+library.add(faServer, faUser, faKey, faUserPlus, faSignInAlt, faSignOutAlt);
 
 Vue.config.productionTip = false;
 

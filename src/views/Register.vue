@@ -93,26 +93,18 @@ export default {
   },
   methods: {
     handleRegistration () {
-      // if (this.user.password == this.confirmedPassword) {
-        this.message = '';
-        this.submitted = true;
-        console.log("<Register> Registration, dispatching auth/register...")
-        this.$store.dispatch('auth/register', this.user).then(
-          data => {
-            this.message = "You have been registered successfully !";
-            this.successful = true;
-          },
-          error => {
-            this.message = error.toString();
-            this.successful = false;
-          }
-        );
-        /*
-      } else {
-        this.message = 'Passwords must match.';
-        this.successfull = false;
-      }
-        */
+      this.message = '';
+      this.submitted = true;
+      this.$store.dispatch('auth/register', this.user).then(
+        data => {
+          this.message = "You have been registered successfully !";
+          this.successful = true;
+        },
+        error => {
+          this.message = error.toString();
+          this.successful = false;
+        }
+      );
     }
   }
 };
@@ -127,6 +119,7 @@ label {
 .card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
+  text-align: center;
 }
 
 .card {

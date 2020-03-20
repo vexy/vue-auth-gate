@@ -1,21 +1,30 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand navbar-primary bg-light">
-      <router-link to="/home" class="nav-link">
+      <router-link to="/server" class="nav-link">
         <font-awesome-icon :icon="['fa', 'server']" class="icon alt"/> Server
       </router-link>
 
       <div v-if="!loggedIn" class="navbar-nav ml-auto">
         <li class="nav-item">
           <router-link to="/register" class="nav-link">
-            <font-awesome-icon icon="user-plus" />Sign Up
+            <font-awesome-icon icon="user-plus" /> Sign Up
           </router-link>
         </li>
         <li class="nav-item">
           <router-link to="/login" class="nav-link">
-            <font-awesome-icon icon="sign-in-alt" />Login
+            <font-awesome-icon icon="sign-in-alt" /> Login
           </router-link>
         </li>
+      </div>
+
+      <div v-if="loggedIn" class="d-flex p2">
+        <router-link to="/protected1" class="nav-link">
+          <font-awesome-icon icon="key" /> Protected 1
+        </router-link>
+        <router-link to="/protected2" class="nav-link">
+          <font-awesome-icon icon="key" /> Protected 2
+        </router-link>
       </div>
 
       <div v-if="loggedIn" class="navbar-nav ml-auto">
@@ -31,6 +40,7 @@
           </a>
         </li>
       </div>
+
     </nav>
 
     <div class="container">
@@ -43,18 +53,11 @@
 export default {
   computed: {
     loggedIn() {
-      return this.$store.state.auth.loggedIn ? true: false;
+      return this.$store.state.auth.loggedIn;
     },
     username() {
       return this.$store.state.auth.username;
     },
-    showAdminBoard() {
-      if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('ROLE_ADMIN');
-      }
-
-      return false;
-    }
   },
   methods: {
     logOut() {
