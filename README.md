@@ -1,5 +1,3 @@
-***Almost there, minor polish to come out soon !***
-
 # Vue.js authentication gate
 This repository contains `Vue.js` template acting like authentication gate for your system. It is based on several Vue dependencies listed below. Feel free to use and customise this template on your own.
 
@@ -24,23 +22,11 @@ Rest of the template is good ol' `JS` in it's purest form.
 
 ### Installation and setup
 Before all, make sure you have `Vue CLI` installed.  
-Use `-g` option to install it into global package scope, like this:
+Use `-g` option to install it into global package scope. Then:
 
 ```bash
-npm install -g @vue/cli @vue/cli-service-global
+$> npm install #wait for installation to complete
 ```
-
-Then, proceed with installing following dependencies:
-```bash
-npm install vue-router@latest vuex@latest
-npm install vee-validate@latest
-npm install axios@latest
-npm install bootstrap@latest jquery@latest popper.js@latest
-npm install @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/vue-fontawesome
-```
-
-**TLDR**;  
-You can just `npm install` if you're feeling a bit lazy today.
 
 ### Companion server
 For the template to work properly, it needs some sort of HTTP server processing the requests.
