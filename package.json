@@ -24,7 +24,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.8",
     "@vue/cli-plugin-eslint": "~5.0.8",
-    "@vue/cli-plugin-router": "~4.2.0",
+    "@vue/cli-plugin-router": "~5.0.8",
     "@vue/cli-plugin-vuex": "~4.2.0",
     "@vue/cli-service": "~5.0.8",
     "@vue/eslint-config-airbnb": "^5.0.2",
